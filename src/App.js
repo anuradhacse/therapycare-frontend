@@ -11,7 +11,7 @@ import { green } from '@material-ui/core/colors';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 
-const serverURL = "https://therapycare.herokuapp.com/";
+const serverURL = "https://therapycare-backend.herokuapp.com/";
 
 const ColorButton = withStyles((theme) => ({
   root: {
@@ -106,7 +106,7 @@ function App() {
   const [supportCategory, setSupportCategory] = useState('');         // selected current support category
 
   const [supportItemList, setSupportItemList] = useState([]);         // list of support item names from back end
-  const [supportItem, setSupportItem] = useState('');                 // selected support item name 
+  const [supportItem, setSupportItem] = useState('');                 // selected support item name
 
   const [itemDetails, setitemDetails] = useState('');                 // Details of the selected item from back end
 
@@ -131,15 +131,15 @@ function App() {
   const [descriptionList, setDescriptionList] = useState([]);
 
 
-  const [participantName, setParticipantName] = useState("");  
-  const [ndis, setNdis] = useState("");                              
-  const [sosPrepared, setSosPrepared] = useState("");  
-  const [startDate, setStartDate] = useState("");                              
-  const [endDate, setEndDate] = useState("");    
-  const [duration, setDuration] = useState("");                              
-                          
-  const [deleted, setDeleted] = useState(0);                        
-                            
+  const [participantName, setParticipantName] = useState("");
+  const [ndis, setNdis] = useState("");
+  const [sosPrepared, setSosPrepared] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [duration, setDuration] = useState("");
+
+  const [deleted, setDeleted] = useState(0);
+
 
 
   // When the page loads, support category names and goals are fetching from the backend
@@ -212,10 +212,10 @@ function App() {
     for (i = 0; i < data.policy.length; i++) {
       policyId.push(0);
     }
-    
+
     setSelectedPolicies(policyId);
   };
-  
+
 
   // Fetch supoort items corresponding to the support categroy from the back end
   const getSupportItemList = async ()=>{
@@ -230,7 +230,7 @@ function App() {
       const response = await fetch(serverURL.concat(`supportitemdetails?supportitem=${supportItem}&supportcategoryname=${supportCategory}`));
       const data = await response.text();
       setitemDetails(data);
-    } 
+    }
   }
 
   const validateDate = ()=>{
@@ -270,19 +270,19 @@ function App() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
-        },   
-        body: JSON.stringify({  data: cart, 
+        },
+        body: JSON.stringify({  data: cart,
                                 goals: attachedGoalList,
-                                description:descriptionList, 
+                                description:descriptionList,
                                 hours:hoursList,
-                                hoursFrequncy: hoursFrequencyList, 
-                                start:startDate, 
-                                end:endDate, 
-                                duration:duration, 
-                                name:participantName, 
-                                ndis:ndis, 
-                                sos:sosPrepared, 
-                                policy:policies, 
+                                hoursFrequncy: hoursFrequencyList,
+                                start:startDate,
+                                end:endDate,
+                                duration:duration,
+                                name:participantName,
+                                ndis:ndis,
+                                sos:sosPrepared,
+                                policy:policies,
                                 today:getToday()})
       }).then(response => {
                 response.blob().then(blob => {
@@ -293,7 +293,7 @@ function App() {
                 a.click();
             });
       });
-      
+
       setCart([]);
       setAttachedGoalList([]);
       setHoursList([]);
@@ -333,7 +333,7 @@ function App() {
     setDuration(diffDays);
   }
 
-  const updateEndDate = (event) => { 
+  const updateEndDate = (event) => {
     setEndDate(event.target.value);
     var date1 = new Date(startDate);
     var date2 = new Date(event.target.value);
@@ -341,7 +341,7 @@ function App() {
     var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
     setDuration(diffDays);
 
-    
+
   }
 
   // update when support category is changed from drop down menue
@@ -371,9 +371,9 @@ function App() {
             suffix=",W";
           }
           var data = hours.toString().concat(",").concat(frequency.toString()).concat(suffix);
-          setHoursList(hoursList.concat(hours*frequency));  
+          setHoursList(hoursList.concat(hours*frequency));
           setHoursFrequencyList(hoursFrequencyList.concat(data));
-          return true;  
+          return true;
         }else{
           alert("Invalid Number of Weeks or Months");
           return false;
@@ -404,11 +404,11 @@ function App() {
 
       // Clear variables after successfully adding to the cart
       setValue([]);
-      setCustomGoalList([]);   
+      setCustomGoalList([]);
       setHours("");
-      setFrequency(""); 
-      setDescription("");  
-    }   
+      setFrequency("");
+      setDescription("");
+    }
   }
 
   const deleteFromCart = (index) => {
@@ -447,7 +447,7 @@ function App() {
   const updateHours = (event) => {
     setHours(event.target.value);
   };
-  
+
   // Update frequency when user type number of week or months
   const updateFrequency = (event) => {
     setFrequency(event.target.value);
@@ -486,7 +486,7 @@ function App() {
         </div>
         )
     }
-    
+
   };
 
   const updateSetting = () =>{
@@ -559,7 +559,7 @@ const addData = () =>{
   let formData = new FormData();
 
   formData.append("file", file);
-  
+
   fetch(serverURL.concat("updatedata"), {method: "POST", body: formData});
 }
 
@@ -568,7 +568,7 @@ const addPolicies = () =>{
   let formData = new FormData();
 
   formData.append("file", file);
-  
+
   fetch(serverURL.concat("updatepolicy"), {method: "POST", body: formData});
 }
 
@@ -589,7 +589,7 @@ const addPolicies = () =>{
           <Input value={endDate} className="date" type="date" onChange={updateEndDate}/> &emsp;
         </Paper>
     </Grid>
-    <br></br> 
+    <br></br>
     <Grid>
       <Paper className={classes.paper1}>
       <div align="center">
@@ -600,7 +600,7 @@ const addPolicies = () =>{
               <MenuItem value={category}>{category}</MenuItem>
             ))}
             </Select>
-        </FormControl>        
+        </FormControl>
       <FormControl>
             <label><b>Select Support Item :</b></label>
             <Select className="dropdown" value={supportItem} onChange={supportItemChange} variant="outlined">
@@ -608,7 +608,7 @@ const addPolicies = () =>{
               <MenuItem className="special" value={item}>{item}</MenuItem>
             ))}
             </Select>
-         <br></br>   
+         <br></br>
       </FormControl>
       </div>
       <div align="center">
@@ -621,10 +621,10 @@ const addPolicies = () =>{
       {timeDiv()}
     </Paper>
   </Grid>
-  <br></br> 
+  <br></br>
   <Grid>
       <Paper className={classes.paper2}>
-        <label><b>Add Goals</b></label> &emsp; 
+        <label><b>Add Goals</b></label> &emsp;
         <FormControl>
           <ReactMultiSelectCheckboxes  width={502} value={value} onChange={updateGoals} options={options} />
           <br></br>
@@ -632,12 +632,12 @@ const addPolicies = () =>{
       <div>
         <TextField className="textarea" label="Add Custom Goals" onChange={addCustomGoal} value={customGoal} variant="outlined" multiline></TextField> &emsp;
         <Button className={classes.icon} align="right"><Icon onClick={attachCustomGoal} style={{ color: green[500],fontSize: 30 }}>add_circle</Icon></Button>
-        
+
         {customGoalList.map((item,i) => (
             <div>
               <Button value={i} onClick={()=>deleteCustomGoalList(i)}><DeleteIcon color="secondary"/></Button>
               <label>{item}</label>
-            </div>   
+            </div>
         ))}
         </div>
       <br></br>
@@ -651,12 +651,12 @@ const addPolicies = () =>{
         </div>
       </Paper>
   </Grid>
-      <br></br> 
+      <br></br>
       <div>
         <ColorButton onClick={addToCart} variant="contained" color="primary"> Add Entry </ColorButton>
         </div>
       <br/>
-      
+
       {showTable == 0 ? (
         <div></div>
       ) : (
@@ -699,7 +699,7 @@ const addPolicies = () =>{
           inputProps={{ 'aria-label': 'secondary checkbox' }}
           />
         </li>
-        </div>  
+        </div>
       ))}
       <br></br>
       <div>
@@ -708,7 +708,7 @@ const addPolicies = () =>{
       </div>
       <br></br>
     </div>
-    
+
   );
 }
 
