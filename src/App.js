@@ -246,6 +246,17 @@ function App() {
 
     if(dd<10) dd='0'+dd;
     if(mm<10) mm='0'+mm;
+    return yyyy+'-'+mm+'-'+dd;
+  }
+  
+  const getTodayAusFormat = ()=>{
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //As January is 0.
+    var yyyy = today.getFullYear();
+
+    if(dd<10) dd='0'+dd;
+    if(mm<10) mm='0'+mm;
     return dd+'_'+mm+'_'+yyyy;
   }
 
@@ -284,7 +295,7 @@ function App() {
                 let url = window.URL.createObjectURL(blob);
                 let a = document.createElement('a');
                 a.href = url;
-                a.download = participantName.concat('_').concat(getToday()).concat('.docx');
+                a.download = participantName.concat('_').concat(getTodayAusFormat()).concat('.docx');
                 a.click();
             });
       });
